@@ -17,4 +17,11 @@
 * [Eviction Notices](https://data.sfgov.org/Housing-and-Buildings/Eviction-Notices/5cei-gny5)
 * [HSA 90 Day Emergency Shelter Waitlist](https://data.sfgov.org/Health-and-Social-Services/HSA-90-day-emergency-shelter-waitlist/w4sk-nq57)
 
+####Get the Data
+To get the data without manually going to each site, clone the repo and then run:
+```
+Rscript data_graber.R
+```
+Currently this will download Budget Data, Citywide Performance Data 2014, and Citywide Performance Data 2013 into 'data' and their data dictionaries into 'data/Data_Dictionaries'. Will add the rest as we decide what all to use.
+
 *ImpactGov is part of the [Data Science Working Group](https://github.com/judecalvillo/Data-Science_Working-Group) at Code for San Francisco.*
