@@ -15,6 +15,6 @@
 ####Market Data
 * [San Francisco Development Pipeline 2015 Quarter 3](https://data.sfgov.org/Housing-and-Buildings/San-Francisco-Development-Pipeline-2015-Quarter-3/apz9-dh7k)
 * [Eviction Notices](https://data.sfgov.org/Housing-and-Buildings/Eviction-Notices/5cei-gny5)
-* * [HSA 90 Day Emergency Shelter Waitlist](https://data.sfgov.org/Health-and-Social-Services/HSA-90-day-emergency-shelter-waitlist/w4sk-nq57)
+* [HSA 90 Day Emergency Shelter Waitlist](https://data.sfgov.org/Health-and-Social-Services/HSA-90-day-emergency-shelter-waitlist/w4sk-nq57)
 
 *ImpactGov is part of the [Data Science Working Group](https://github.com/judecalvillo/Data-Science_Working-Group) at Code for San Francisco.*
