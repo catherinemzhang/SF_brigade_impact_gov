@@ -1,0 +1,118 @@
+---
+title: "Exploring ImpactGov data"
+author: "Scott Brenstuhl"
+date: "January 27, 2016"
+output: html_document
+---
+
+```{r libraries, alert=FALSE, message = FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+## Citywide Performance
+
+```{r}
+#https://data.sfgov.org/api/views/5x94-tptc/rows.csv?accessType=DOWNLOAD
+perf.measures.FY14 <- read.csv('../data/Citywide_Performance_Measurement_Annual_Report_FY14_Dataset.csv')
+
+perf.measures.FY13 <- read.csv('../data/Citywide_Performance_Measurement_Annual_Report_FY13_Dataset.csv')
+```
+
+How wide of a margin should be given to "On target is positive"
+goals?
+```{r}
+group_by(perf.measures.FY14, Performance.Pattern) %>%
+    summarise(count = n())
+
+#subset(perf.measures.FY14, Performance.Pattern == 'On target is positive')
+```
+
+Acounting for diffent units might be... interesting depending what we decide to
+do.
+```{r}
+group_by(perf.measures.FY14, Unit.of.Measure) %>%
+    summarise(count = n())
+```
+
+There might be an opportunity to cross over with 311 data here? Not a ton of
+info though.
+```{r}
+nrow(subset(perf.measures.FY14, Program == '311 CUSTOMER SERVICE CENTER'))
+```
+
+```{r}
+goal.evaluater <- function(row, actual.col, target.col){
+    actual = as.numeric(row[actual.col])
+    target = as.numeric(row[target.col])
+    if(row['Performance.Pattern'] == 'Below target is positive'){
+        actual < target
+    }else if(row['Performance.Pattern'] == 'Above target is positive'){
+            actual > target
+    }else{
+        # Checked within 5% is good for now, needs more research
+        (target-actual)/target < .05 & (target-actual)/target > -.05
+    }
+}
+
+
+perf.measures.FY14$met.goal <- apply(perf.measures.FY14, 1, goal.evaluater, 'FY.2014...Total.Actual.Data', 'FY.2014...Total.Target.Data')
+
+
+perf.measures.FY13$met.goal <- apply(perf.measures.FY13, 1, goal.evaluater, 'FY.2013...Total.Actual.Data', 'FY.2013...Total.Target.Data')
+
+success.by.pattern <-table(perf.measures.FY14[c('met.goal', 'Performance.Pattern')])
+success.by.pattern
+apply(success.by.pattern, 2, function(col){col[2]/(col[1]+col[2])})
+
+```
+
+```{r echo=FALSE}
+bar.order <- names(sort(table(perf.measures.FY14$Dept),decreasing = TRUE))
+
+ggplot(perf.measures.FY14, aes(x = Dept, fill = met.goal)) +
+    geom_bar() +
+    scale_x_discrete(limits = bar.order) +
+    labs(title= "Performance Measure by Department FY14") +
+    theme(legend.position="top")+
+    theme(axis.text.x = element_text(angle = -45, hjust = 0))
+
+ggplot(perf.measures.FY13, aes(x = Dept, fill = met.goal)) +
+    geom_bar() +
+    scale_x_discrete(limits = bar.order) +
+    labs(title= "Performance Measure by Department FY13") +
+    theme(legend.position="none")+
+    theme(axis.text.x = element_text(angle = -45, hjust = 0))
+
+unique(subset(perf.measures.FY14, select = c(Dept,Department)))
+```
+
+Can't forget there are programs that didnt have measures.
+
+
+##Budget
+
+```{r}
+budget <- read.csv('../data/Budget.csv')
+```
+
+Most of the departments are also present in peformance measures FY14
+```{r}
+budget.depts <- unique(budget$Department.Code)
+perf.depts <- unique(perf.measures.FY14$Dept)
+length(intersect(budget.depts, perf.depts))
+
+# the only value in perf.depts not in budget are blanks.
+# So every department has budget entries!
+setdiff(perf.depts, intersect(budget.depts, perf.depts))
+
+no.perf <- setdiff(budget.depts,perf.depts)
+
+no.perf.budget <- subset(budget, Department.Code %in% no.perf)
+
+# Do not have matching FY14 performance values
+unique(no.perf.budget$Department)
+```
+
+
+
