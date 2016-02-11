@@ -185,6 +185,9 @@ success.by.pattern</code></pre>
 ## 999          MUNICIPAL TRANSPORTATION AGENCY
 ## 1000</code></pre>
 <p>Can’t forget there are programs that didnt have measures.</p>
+</div>
+<div id="budget" class="section level2">
+<h2>Budget</h2>
 <pre class="r"><code>budget &lt;- read.csv('../data/Budget.csv')</code></pre>
 <p>Most of the departments are also present in peformance measures FY14</p>
 <pre class="r"><code>budget.depts &lt;- unique(budget$Department.Code)
@@ -210,6 +213,493 @@ unique(no.perf.budget$Department)</code></pre>
 ## [7] County Education Office              
 ## [8] Community Investment &amp; Infrastructure
 ## 56 Levels: Academy of Sciences Adult Probation ... War Memorial</code></pre>
+<p>will soon be relasing all KPI for the city Look at baltimore daily report card sf government barameter through city controlers office. data for good exchange</p>
+<p>Look at city controler’s office website. City performance section</p>
+<p>Optimal distribution of ambulances</p>
+<p>Rail and Bus</p>
+<p>Affordable public housing (how do HOA fees affect people)</p>
+<pre class="r"><code>head(budget)</code></pre>
+<pre><code>##   Fiscal.Year Revenue.or.Spending Related.Gov.t.Unit
+## 1        2014            Spending                 No
+## 2        2017            Spending                 No
+## 3        2017            Spending                 No
+## 4        2013            Spending                 No
+## 5        2011            Spending                 No
+## 6        2016            Spending                 No
+##   Organization.Group.Code   Organization.Group Department.Code
+## 1                       5 Culture &amp; Recreation             WAR
+## 2                       5 Culture &amp; Recreation             WAR
+## 3                       5 Culture &amp; Recreation             WAR
+## 4                       5 Culture &amp; Recreation             WAR
+## 5                       5 Culture &amp; Recreation             WAR
+## 6                       5 Culture &amp; Recreation             WAR
+##     Department Program.Code                  Program Character.Code
+## 1 War Memorial          EED Operations &amp; Maintenance            021
+## 2 War Memorial          EED Operations &amp; Maintenance            013
+## 3 War Memorial          EED Operations &amp; Maintenance            013
+## 4 War Memorial          EED Operations &amp; Maintenance            081
+## 5 War Memorial          EED Operations &amp; Maintenance            021
+## 6 War Memorial          EED Operations &amp; Maintenance            021
+##                   Character Object.Code
+## 1    Non Personnel Services         021
+## 2 Mandatory Fringe Benefits         016
+## 3 Mandatory Fringe Benefits         015
+## 4   Services of Other Depts         081
+## 5    Non Personnel Services         029
+## 6    Non Personnel Services         028
+##                                   Object Sub.object.Code
+## 1                                 Travel           02103
+## 2                        Dental Coverage           01601
+## 3                         Health Service           01551
+## 4    Services of Other Depts (AAO Funds)           081HZ
+## 5             Maintenance Svcs-Equipment           02911
+## 6 Maintenance Svcs-Building &amp; Structures           02801
+##                         Sub.object Fund.Type.Code             Fund.Type
+## 1           Air Travel - Employees             2S Special Revenue Funds
+## 2                  Dental Coverage             2S Special Revenue Funds
+## 3        Health Service-Admin Cost             2S Special Revenue Funds
+## 4 GF-HR Mgmt/Benefits Admin System             2S Special Revenue Funds
+## 5            DP/WP Equipment Maint             2S Special Revenue Funds
+## 6               Scavenger Services             2S Special Revenue Funds
+##   Fund.Code              Fund Fund.Category.Code Fund.Category Amount
+## 1     2SWMF War Memorial Fund                  1     Operating   2260
+## 2     2SWMF War Memorial Fund                  1     Operating  86207
+## 3     2SWMF War Memorial Fund                  1     Operating  17649
+## 4     2SWMF War Memorial Fund                  1     Operating  22233
+## 5     2SWMF War Memorial Fund                  1     Operating  20000
+## 6     2SWMF War Memorial Fund                  1     Operating 335000</code></pre>
+<pre class="r"><code>sort(unique(budget$Program))</code></pre>
+<pre><code>##   [1] 311 Call Center                         
+##   [2] Academy Of Sciences                     
+##   [3] Accessible Services                     
+##   [4] Accounting Operations And Systems       
+##   [5] Administration                          
+##   [6] Administration - Adult Probation        
+##   [7] Administration - Criminal &amp; Civil       
+##   [8] Administration &amp; Support Services       
+##   [9] Administration, Business                
+##  [10] Administration/Planning                 
+##  [11] Administration/Support Services         
+##  [12] Administrative Support                  
+##  [13] Admissions                              
+##  [14] Adult Protective Services               
+##  [15] Adult Services                          
+##  [16] Affordable Housing                      
+##  [17] Agency Wide Expenses                    
+##  [18] Airport Director                        
+##  [19] Airport Police                          
+##  [20] Animal Welfare                          
+##  [21] Appeals Processing                      
+##  [22] Architecture                            
+##  [23] Art Commission-Administration           
+##  [24] Asian Arts Museum                       
+##  [25] Bio-Diversity                           
+##  [26] Board - Legislative Analysis            
+##  [27] Board Of Supervisor                     
+##  [28] Branch Program                          
+##  [29] Building Repair And Maintenance         
+##  [30] Bureau Of Design And Construction       
+##  [31] Business &amp; Finance                      
+##  [32] Business Tax Fund                       
+##  [33] Calworks                                
+##  [34] Capital Asset Planning                  
+##  [35] Capital Programs &amp; Construction         
+##  [36] Capital Projects                        
+##  [37] Capital Projects And Grants             
+##  [38] Career Criminal Prosecution             
+##  [39] Central Administration                  
+##  [40] Chief Operating Officer                 
+##  [41] Child Abduction                         
+##  [42] Child Support Services Program          
+##  [43] Children and Families Fund              
+##  [44] Children's Baseline                     
+##  [45] Children's Fund Programs                
+##  [46] Children's Services                     
+##  [47] Children's Svcs - Non - Children's Fund 
+##  [48] City Administration                     
+##  [49] City Administrator - Administration     
+##  [50] City Capital Projects                   
+##  [51] City Services Auditor                   
+##  [52] Citywide Facilities                     
+##  [53] Citywide Planning                       
+##  [54] Citywide Services                       
+##  [55] Civic Collection                        
+##  [56] Civic Design                            
+##  [57] Civil Service Commission                
+##  [58] Claims                                  
+##  [59] Class And Compensation                  
+##  [60] Clean Air                               
+##  [61] Clerk Of The Board                      
+##  [62] Climate Change/Energy                   
+##  [63] Collection Technical Services           
+##  [64] Comm Hlth - Comm Support - Housing      
+##  [65] Comm Hlth - Prev - Maternal &amp; Child Hlth
+##  [66] Comm Hlth - Prevention - Aids           
+##  [67] Comm Hlth - Prevention - Disease Control
+##  [68] Comm Hlth - Prevention - Hlth Education 
+##  [69] Commission On Status Of Women           
+##  [70] Committee On Information Technology     
+##  [71] Communications &amp; Marketing              
+##  [72] Community Ambassador Program            
+##  [73] Community Arts &amp; Education              
+##  [74] Community Arts &amp; Education-General Admin
+##  [75] Community Investment                    
+##  [76] Community Investments                   
+##  [77] Community Partnerships And Programming  
+##  [78] Community Redevelopment                 
+##  [79] Community Services                      
+##  [80] Construction Management Services        
+##  [81] Continuing Projects, Maint And Renewal  
+##  [82] Contract Monitoring                     
+##  [83] County Adult Assistance Program         
+##  [84] County Clerk Services                   
+##  [85] County Education Services               
+##  [86] County Veterans Services                
+##  [87] Court House Construction                
+##  [88] Court Security And Process              
+##  [89] Criminal And Special Defense            
+##  [90] Criminal Justice                        
+##  [91] Cultural Equity                         
+##  [92] Current Planning                        
+##  [93] Custody                                 
+##  [94] Customer Service                        
+##  [95] Customer Services                       
+##  [96] Debt Service                            
+##  [97] Delinquent Revenue                      
+##  [98] Departmental Fund Transfer              
+##  [99] Development &amp; Planning                  
+## [100] Development And Planning                
+## [101] Disability Access                       
+## [102] Dispute Resolution Program              
+## [103] District Attorney Child Support Services
+## [104] Diversion And Community Integration Prog
+## [105] Domestic Violence                       
+## [106] DSS Childcare                           
+## [107] Earthquake Safety Program               
+## [108] Economic Analysis                       
+## [109] Economic Development                    
+## [110] Educational Programs                    
+## [111] Election Campaign Fund                  
+## [112] Elections                               
+## [113] Emergency Communications                
+## [114] Emergency Management - Emsa             
+## [115] Emergency Services                      
+## [116] Emergency Services Agency               
+## [117] Employee Deferred Comp Plan             
+## [118] Employee Relations                      
+## [119] Engineering                             
+## [120] Engineering &amp; Environmental             
+## [121] Entertainment Commission                
+## [122] Environment                             
+## [123] Environment-Outreach                    
+## [124] Environmental Health Services           
+## [125] Environmental Justice / Youth Employment
+## [126] Environmental Planning                  
+## [127] Equal Employment Opportunity            
+## [128] Ethics Commission                       
+## [129] Facilites                               
+## [130] Facilities                              
+## [131] Facilities &amp; Equipment                  
+## [132] Facilities Mgmt &amp; Operations            
+## [133] False Alarm Prevention                  
+## [134] Family And Children's Service           
+## [135] Family Violence Program                 
+## [136] Felony Prosecution                      
+## [137] Film Services                           
+## [138] Finance                                 
+## [139] Finance And Administration              
+## [140] Financial Systems Projects              
+## [141] Fire Airport                            
+## [142] Fire Airport Bureau Non-Personnel Cost  
+## [143] Fire General                            
+## [144] Fire Port Fireboat                      
+## [145] Fire Suppression                        
+## [146] Fleet Management                        
+## [147] Food Stamps                             
+## [148] Forensics - Ambulatory Care             
+## [149] Gallery                                 
+## [150] General Administration                  
+## [151] General City Responsibilities           
+## [152] General Fund                            
+## [153] General Fund Unallocated                
+## [154] General Management                      
+## [155] Golden Gate Park                        
+## [156] Governance And Outreach                 
+## [157] Grant Services                          
+## [158] Grants For The Arts                     
+## [159] Green Building                          
+## [160] Gross Receipts Tax                      
+## [161] Health At Home                          
+## [162] Health Service System                   
+## [163] Hetch Hetchy Capital Projects           
+## [164] Hetch Hetchy Project Operations         
+## [165] Hetchy Water Operations                 
+## [166] Hiv Health Services                     
+## [167] Homeless Services                       
+## [168] Housing Inspection/Code Enforcement Svcs
+## [169] Human Resources                         
+## [170] Human Rights Commission                 
+## [171] Immigrant And Language Services         
+## [172] In Home Supportive Services             
+## [173] Indigent Defense/Grand Jury             
+## [174] Information Technology                  
+## [175] Inspection Services                     
+## [176] Integrated Intake                       
+## [177] Investigations                          
+## [178] Investment                              
+## [179] Joint Development                       
+## [180] Justis Project - City Adm Office        
+## [181] Juvenile Hall                           
+## [182] Juvenile Hall Replacement Debt Payment  
+## [183] Laguna Honda - Long Term Care           
+## [184] Laguna Honda - Non Lhh Program Expenses 
+## [185] Laguna Honda Hosp - Acute Care          
+## [186] Laguna Honda Hosp - Comm Support Care   
+## [187] Law Library                             
+## [188] Legal Service                           
+## [189] Legal Service-Paying Depts              
+## [190] Library Administration                  
+## [191] Living Wage / Living Health (Mco/Hcao)  
+## [192] Local Agency Formation                  
+## [193] Log Cabin Ranch                         
+## [194] Main Program                            
+## [195] Maintenance                             
+## [196] Management                              
+## [197] Management Information                  
+## [198] Management Information System           
+## [199] Management, Budget And Analysis         
+## [200] Marina Harbor                           
+## [201] Marina Yacht Harbor                     
+## [202] Maritime Operations &amp; Marketing         
+## [203] Medi-Cal                                
+## [204] Medical Examiner                        
+## [205] Mental Health - Acute Care              
+## [206] Mental Health - Children's Program      
+## [207] Mental Health - Community Care          
+## [208] Mental Health - Long Term Care          
+## [209] Misdemeanor Prosecution                 
+## [210] Moscone Expansion Project               
+## [211] Mta Development Impact Fee              
+## [212] Municipal Symphony Concerts             
+## [213] Neighborhood Beautification             
+## [214] Neighborhood Services                   
+## [215] No Program Defined                      
+## [216] Non-Grant Construction Projects         
+## [217] Occupational Safety &amp; Health            
+## [218] Office Of Citizen Complaints            
+## [219] Office Of Short-Term Rentals            
+## [220] Office Of Small Business                
+## [221] Office Of Strategic Partnerships        
+## [222] Office On Aging                         
+## [223] One Stop Re Entry Services              
+## [224] Oper &amp; Maint Of Museums                 
+## [225] Operating Reserve                       
+## [226] Operations                              
+## [227] Operations &amp; Maintenance                
+## [228] Operations And Administration           
+## [229] Operations And Security                 
+## [230] Outdoor Public Warning System           
+## [231] Parking &amp; Traffic                       
+## [232] Parking Garages &amp; Lots                  
+## [233] Parks                                   
+## [234] Patrol                                  
+## [235] Payroll And Personnel Services          
+## [236] Personal Property                       
+## [237] Plan Review Services                    
+## [238] Planning &amp; Development                  
+## [239] Planning Division                       
+## [240] Police Airport Bureau Non-Personnel Cost
+## [241] Pop Growth Gf Alloc Capital Projects    
+## [242] Power Infrastructure Development        
+## [243] Power Purchasing/ Scheduling            
+## [244] Power Utility Field Services            
+## [245] Power Utility Services                  
+## [246] Pre - Sentencing Investigation          
+## [247] Prevention &amp; Investigation              
+## [248] Primary Care - Ambu Care - Health Cntrs 
+## [249] Probation Services                      
+## [250] Procurement Services                    
+## [251] Property Tax/Licensing                  
+## [252] Public Administrator                    
+## [253] Public Art                              
+## [254] Public Conservator                      
+## [255] Public Ed Fund - Prop H ( March 2004 )  
+## [256] Public Education Fund ( Prop H )        
+## [257] Public Finance                          
+## [258] Public Guardian                         
+## [259] Public Policy &amp; Finance                 
+## [260] Rail &amp; Bus Services                     
+## [261] Real Estate &amp; Management                
+## [262] Real Estate Services                    
+## [263] Real Property                           
+## [264] Realignment Services-Post Release Comm. 
+## [265] Rec &amp; Park Administration               
+## [266] Recorder                                
+## [267] Recreation                              
+## [268] Recruit/ Assess/ Client Services        
+## [269] Recycling                               
+## [270] Refugee Resettlement Program            
+## [271] Rent Board                              
+## [272] Representative Payee                    
+## [273] Reproduction Services                   
+## [274] Retiree Health Care -  Prop B           
+## [275] Retirement Services                     
+## [276] Revenue, Transfers &amp; Reserves           
+## [277] Risk Management / General               
+## [278] Security Services                       
+## [279] Security, Safety, Training &amp; Enforcement
+## [280] Sf Benefits Net                         
+## [281] SFGH - Acute Care - Forensics           
+## [282] SFGH - Acute Care - Hospital            
+## [283] SFGH - Acute Care - Psychiatry          
+## [284] SFGH - Ambu Care - Adult Med Hlth Cntr  
+## [285] SFGH - Ambu Care - Methadone Clinic     
+## [286] SFGH - Ambu Care - Occupational Health  
+## [287] SFGH - Emergency - Emergency            
+## [288] SFGH - Emergency - Psychiatric Services 
+## [289] SFGH - Long Term Care - Rf Psychiatry   
+## [290] Sfhn-Managed Care                       
+## [291] Sheriff Administration                  
+## [292] Sheriff Field Services                  
+## [293] Sheriff Programs                        
+## [294] Sheriff Recruitment &amp; Training          
+## [295] Solid Waste Management                  
+## [296] Strategic Planning/Compliance           
+## [297] Street And Sewer Repair                 
+## [298] Street Artists                          
+## [299] Street Environmental Services           
+## [300] Street Use Management                   
+## [301] Structural Maintenance                  
+## [302] Substance Abuse - Community Care        
+## [303] Superior Court                          
+## [304] Support Services                        
+## [305] Taxi Services                           
+## [306] Taxpayer Assistance                     
+## [307] Technical Services                      
+## [308] Technology                              
+## [309] Technology Services:Public Safety       
+## [310] Tourism Events                          
+## [311] Toxics                                  
+## [312] Training                                
+## [313] Transfer Tax                            
+## [314] Transitional-Aged Youth Baseline        
+## [315] Transitions                             
+## [316] Treasure Island                         
+## [317] Treasury                                
+## [318] Trial Court Services                    
+## [319] Turf Management                         
+## [320] Urban Forestry                          
+## [321] Vehicle &amp; Equipment Main &amp; Fueling      
+## [322] Violence Prevention                     
+## [323] Wastewater Capital Projects             
+## [324] Wastewater Collection                   
+## [325] Wastewater Operations                   
+## [326] Wastewater Treatment                    
+## [327] Water Capital Projects                  
+## [328] Water Distribution                      
+## [329] Water Source Of Supply                  
+## [330] Water Supply &amp; Power Operations         
+## [331] Water Transmission/ Distribution        
+## [332] Water Treatment                         
+## [333] Welfare to Work                         
+## [334] Work Order Services                     
+## [335] Work Orders &amp; Grants                    
+## [336] Workers Compensation                    
+## [337] Workforce Development                   
+## [338] Workforce Training                      
+## [339] Zoning Administration And Compliance    
+## [340] Zoo Operations                          
+## 340 Levels: 311 Call Center Academy Of Sciences ... Zoo Operations</code></pre>
+<pre class="r"><code>rail.bus &lt;- subset(budget, Program =='Rail &amp; Bus Services') %&gt;%
+    group_by(Character, Fiscal.Year) %&gt;%
+    summarise('amount'= sum(Amount)) %&gt;%
+    arrange(desc(amount))
+
+rail.bus</code></pre>
+<pre><code>## Source: local data frame [74 x 3]
+## Groups: Character
+## 
+##            Character Fiscal.Year  amount
+## 1  Allocated Charges        2010  -54127
+## 2  Allocated Charges        2011  -54127
+## 3  Allocated Charges        2012  -54127
+## 4  Allocated Charges        2013  -54127
+## 5  Allocated Charges        2014  -54127
+## 6  Allocated Charges        2015  -54127
+## 7  Allocated Charges        2016  -54127
+## 8  Allocated Charges        2017  -54127
+## 9     Capital Outlay        2015 1260826
+## 10    Capital Outlay        2011 1099380
+## ..               ...         ...     ...</code></pre>
+<pre class="r"><code>names(budget)</code></pre>
+<pre><code>##  [1] &quot;Fiscal.Year&quot;             &quot;Revenue.or.Spending&quot;    
+##  [3] &quot;Related.Gov.t.Unit&quot;      &quot;Organization.Group.Code&quot;
+##  [5] &quot;Organization.Group&quot;      &quot;Department.Code&quot;        
+##  [7] &quot;Department&quot;              &quot;Program.Code&quot;           
+##  [9] &quot;Program&quot;                 &quot;Character.Code&quot;         
+## [11] &quot;Character&quot;               &quot;Object.Code&quot;            
+## [13] &quot;Object&quot;                  &quot;Sub.object.Code&quot;        
+## [15] &quot;Sub.object&quot;              &quot;Fund.Type.Code&quot;         
+## [17] &quot;Fund.Type&quot;               &quot;Fund.Code&quot;              
+## [19] &quot;Fund&quot;                    &quot;Fund.Category.Code&quot;     
+## [21] &quot;Fund.Category&quot;           &quot;Amount&quot;</code></pre>
+<pre class="r"><code>head(budget[budget$Program == 'Rail &amp; Bus Services',])</code></pre>
+<pre><code>##       Fiscal.Year Revenue.or.Spending Related.Gov.t.Unit
+## 43196        2017            Spending                 No
+## 43202        2012            Spending                 No
+## 43209        2010            Spending                 No
+## 43213        2016            Spending                 No
+## 43214        2017            Spending                 No
+## 43239        2014            Spending                 No
+##       Organization.Group.Code                      Organization.Group
+## 43196                       2 Public Works, Transportation &amp; Commerce
+## 43202                       2 Public Works, Transportation &amp; Commerce
+## 43209                       2 Public Works, Transportation &amp; Commerce
+## 43213                       2 Public Works, Transportation &amp; Commerce
+## 43214                       2 Public Works, Transportation &amp; Commerce
+## 43239                       2 Public Works, Transportation &amp; Commerce
+##       Department.Code                      Department Program.Code
+## 43196             MTA Municipal Transportation Agency          BEN
+## 43202             MTA Municipal Transportation Agency          BEN
+## 43209             MTA Municipal Transportation Agency          BEN
+## 43213             MTA Municipal Transportation Agency          BEN
+## 43214             MTA Municipal Transportation Agency          BEN
+## 43239             MTA Municipal Transportation Agency          BEN
+##                   Program Character.Code               Character
+## 43196 Rail &amp; Bus Services            021  Non Personnel Services
+## 43202 Rail &amp; Bus Services            040    Materials &amp; Supplies
+## 43209 Rail &amp; Bus Services            021  Non Personnel Services
+## 43213 Rail &amp; Bus Services            021  Non Personnel Services
+## 43214 Rail &amp; Bus Services            081 Services of Other Depts
+## 43239 Rail &amp; Bus Services            021  Non Personnel Services
+##       Object.Code                                 Object Sub.object.Code
+## 43196         051                              Insurance           05114
+## 43202         042       Building &amp; Construction Supplies           04298
+## 43209         029             Maintenance Svcs-Equipment           02931
+## 43213         029             Maintenance Svcs-Equipment           02999
+## 43214         081    Services of Other Depts (AAO Funds)           081SR
+## 43239         028 Maintenance Svcs-Building &amp; Structures           02801
+##                                  Sub.object Fund.Type.Code
+## 43196 Workers' Comp-Medical Employee Reimb.             5M
+## 43202          Other Construction Materials             5M
+## 43209                    Office Equip Maint             5M
+## 43213                     Other Equip Maint             5M
+## 43214                  SR-DPW-Street Repair             5M
+## 43239                    Scavenger Services             5M
+##                         Fund.Type Fund.Code                Fund
+## 43196 MTA Municipal Railway Funds     5MAAA Muni Operating Fund
+## 43202 MTA Municipal Railway Funds     5MAAA Muni Operating Fund
+## 43209 MTA Municipal Railway Funds     5MAAA Muni Operating Fund
+## 43213 MTA Municipal Railway Funds     5MAAA Muni Operating Fund
+## 43214 MTA Municipal Railway Funds     5MAAA Muni Operating Fund
+## 43239 MTA Municipal Railway Funds     5MAAA Muni Operating Fund
+##       Fund.Category.Code Fund.Category   Amount
+## 43196                  1     Operating 15398431
+## 43202                  1     Operating    80331
+## 43209                  1     Operating     4212
+## 43213                  1     Operating  2662397
+## 43214                  1     Operating   180000
+## 43239                  1     Operating   741875</code></pre>
 </div>
 
 

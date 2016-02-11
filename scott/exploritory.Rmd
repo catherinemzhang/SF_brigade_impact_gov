@@ -2,12 +2,15 @@
 title: "Exploring ImpactGov data"
 author: "Scott Brenstuhl"
 date: "January 27, 2016"
-output: html_document
+output:
+        md_document:
+        variant: markdown_github
 ---
 
 ```{r libraries, alert=FALSE, message = FALSE}
 library(dplyr)
 library(ggplot2)
+# html_document
 ```
 
 ## Citywide Performance
@@ -114,5 +117,45 @@ no.perf.budget <- subset(budget, Department.Code %in% no.perf)
 unique(no.perf.budget$Department)
 ```
 
+will soon be relasing all KPI for the city
+Look at baltimore daily report card
+sf government barameter through city controlers office. 
+data for good exchange
+
+Look at city controler's office website. City performance section
+
+Optimal distribution of ambulances 
+
+Rail and Bus
+
+Affordable public housing (how do HOA fees affect people)
+
+```{r}
+
+dept.budget.2014 <- subset(budget,Fiscal.Year == 2014) %>%
+    group_by(Department.Code) %>%
+    summarise(sum(Amount))
+
+dept.budget.2013 <- subset(budget,Fiscal.Year == 2013) %>%
+    group_by(Department.Code) %>%
+    summarise(sum(Amount))
+
+dept.budget.2013
+merge(dept.budget.2013, dept.budget.2014, by = 'Department.Code')
+?merge
+head(budget)
+
+sort(unique(budget$Program))
+         
+rail.bus <- subset(budget, Program =='Rail & Bus Services') %>%
+    group_by(Character, Fiscal.Year) %>%
+    summarise('amount'= sum(Amount)) %>%
+    arrange(desc(amount))
 
 
+    
+
+names(budget)
+head(budget[budget$Program == 'Rail & Bus Services',])
+
+```
