@@ -7,10 +7,12 @@
 
 ####Operational Data
 * [Budget Data](https://data.sfgov.org/City-Management-and-Ethics/Budget/xdgd-c79v )
+* [Spending and Revenue](https://data.sfgov.org/City-Management-and-Ethics/Spending-And-Revenue/bpnb-jwfb)
 * [Vendor Payments (Purchase Order Summary)](https://data.sfgov.org/City-Management-and-Ethics/Vendor-Payments-Purchase-Order-Summary-/p5r5-fd7g)
 * [Vendor Payments (Vouchers)](https://data.sfgov.org/City-Management-and-Ethics/Vendor-Payments-Vouchers-/n9pm-xkyq)
 * [Citywide Performance Data 2014](https://data.sfgov.org/City-Management-and-Ethics/Citywide-Performance-Measurement-Annual-Report-FY1/6h77-suve)
 * [Citywide Performance Data 2013](https://data.sfgov.org/City-Management-and-Ethics/Citywide-Performance-Measurement-Annual-Report-FY1/5x94-tptc)
+* [1996-2011 City Survey Database (study of residents' perceptions of the quality of select City services)](https://data.sfgov.org/City-Management-and-Ethics/1996-2011-City-Survey-Database/583k-63vu)
 
 ####Market Data
 * [San Francisco Development Pipeline 2015 Quarter 3](https://data.sfgov.org/Housing-and-Buildings/San-Francisco-Development-Pipeline-2015-Quarter-3/apz9-dh7k)
