@@ -25,6 +25,19 @@ if(!file.exists('data/Budget.csv')){
                   method = 'curl')
 }
 
+# Spending and Revenue
+# # https://data.sfgov.org/City-Management-and-Ethics/Spending-And-Revenue/bpnb-jwfb
+if(!file.exists('data/Spending_and_Revenue.csv')){
+    download.file('https://data.sfgov.org/api/views/bpnb-jwfb/rows.csv?accessType=DOWNLOAD', 
+                  'data/Spending_and_Revenue.csv',
+                  method = 'curl')
+    download.file('https://data.sfgov.org/api/views/bpnb-jwfb/files/l4Kfvck4E4fPLMGB6_qQdbLzKTmY9X3s8Xcnz0gF-w4?download=true&filename=N:\\EIS\\DataCoordination\\Metadata%20Spring%20Cleaning\\CON_DataDictionary_Spending-and-Revenue.pdf',
+                  'data/Data_Dictionaries/CON_DataDictionary_Spending-and-Revenue.pdf',
+                  method = 'curl')
+}
+
+
+
 # FY14 Performance Measures 
 # https://data.sfgov.org/City-Management-and-Ethics/Citywide-Performance-Measurement-Annual-Report-FY1/6h77-suve
 if(!file.exists('data/Citywide_Performance_Measurement_Annual_Report_FY14_Dataset.csv')){
