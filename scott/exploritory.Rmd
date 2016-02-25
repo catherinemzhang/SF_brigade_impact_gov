@@ -8,6 +8,7 @@ output:
 ---
 
 ```{r libraries, alert=FALSE, message = FALSE}
+library(readr)
 library(dplyr)
 library(ggplot2)
 # html_document
@@ -17,9 +18,9 @@ library(ggplot2)
 
 ```{r}
 #https://data.sfgov.org/api/views/5x94-tptc/rows.csv?accessType=DOWNLOAD
-perf.measures.FY14 <- read.csv('../data/Citywide_Performance_Measurement_Annual_Report_FY14_Dataset.csv')
+perf.measures.FY14 <- read_csv('../data/Citywide_Performance_Measurement_Annual_Report_FY14_Dataset.csv')
 
-perf.measures.FY13 <- read.csv('../data/Citywide_Performance_Measurement_Annual_Report_FY13_Dataset.csv')
+perf.measures.FY13 <- read_csv('../data/Citywide_Performance_Measurement_Annual_Report_FY13_Dataset.csv')
 ```
 
 How wide of a margin should be given to "On target is positive"
@@ -117,18 +118,6 @@ no.perf.budget <- subset(budget, Department.Code %in% no.perf)
 unique(no.perf.budget$Department)
 ```
 
-will soon be relasing all KPI for the city
-Look at baltimore daily report card
-sf government barameter through city controlers office. 
-data for good exchange
-
-Look at city controler's office website. City performance section
-
-Optimal distribution of ambulances 
-
-Rail and Bus
-
-Affordable public housing (how do HOA fees affect people)
 
 ```{r}
 
@@ -140,22 +129,94 @@ dept.budget.2013 <- subset(budget,Fiscal.Year == 2013) %>%
     group_by(Department.Code) %>%
     summarise(sum(Amount))
 
-dept.budget.2013
-merge(dept.budget.2013, dept.budget.2014, by = 'Department.Code')
-?merge
-head(budget)
+change.13.to.14 <- merge(dept.budget.2013,
+                         dept.budget.2014, by = 'Department.Code')
 
-sort(unique(budget$Program))
-         
-rail.bus <- subset(budget, Program =='Rail & Bus Services') %>%
-    group_by(Character, Fiscal.Year) %>%
-    summarise('amount'= sum(Amount)) %>%
-    arrange(desc(amount))
-
-
-    
-
-names(budget)
-head(budget[budget$Program == 'Rail & Bus Services',])
+ 
 
 ```
+
+Figure out how to rule out iner-departmental spending
+
+```{r}
+neg.rev.14 <- subset(budget, Amount < 0 & Fiscal.Year == 2014 & Revenue.or.Spending == 'Revenue')
+
+neg.spend.14 <- subset(budget, Amount < 0 & Fiscal.Year == 2014 & Revenue.or.Spending == 'Spending')
+
+sum(neg.rev.14$Amount)
+sum(neg.spend.14$Amount)
+
+#figure out if Object is a better breakdown
+
+var <- subset(budget.14, Object == 'Recovery for Svcs to AAO Funds')
+
+serv <- subset(budget.14, Character == 'Services of Other Depts')
+
+uses.14 <- subset(budget,  Amount < 0 & 
+                         Fiscal.Year == 2014 & 
+                         Character == 'Transfer Adjustments-Uses')
+
+#no match, amount == 9864899
+
+
+sources.14 <- subset(budget, Amount < 0 & 
+                         Fiscal.Year == 2014 & 
+                         Character ==  'Transfer Adjustments-Sources')
+uses.13 <- subset(budget,  Amount < 0 & 
+                         Fiscal.Year == 2013 & 
+                         Character == 'Transfer Adjustments-Uses')
+
+sources.13 <- subset(budget, Amount < 0 & 
+                         Fiscal.Year == 2013 & 
+                         Character ==  'Transfer Adjustments-Sources')
+
+# looks close but not exact
+sum(uses.14$Amount)
+sum(sources.14$Amount)
+sum(uses.13$Amount)
+sum(sources.13$Amount)
+
+# uses has two less
+table(uses.14$Amount < 0)
+table(sources.14$Amount < 0)
+
+table(table(uses.14$Department) == table(sources.14$Department))
+table(table(uses.13$Department) == table(sources.13$Department))
+```
+
+It looks likely that Airport Commission and Port have a misslabled expense in 14.
+13's numbers are similar Airport Commision, Port, and Fire Department are off.
+
+Figuring out the breakdown 
+
+```{r echo = FALSE}
+spend.rev <- read.csv('../data/Spending_And_Revenue.csv')
+
+budget.14 <- subset(budget, Fiscal.Year == 2014)
+
+spend.rev.14 <- subset(spend.rev, Fiscal.Year == 2014)
+
+unique(spend.rev.14) == unique(budget.14)
+
+budget.14 
+
+```
+
+```{r echo = FALSE}
+taxes <- budget[grep('Tax',budget$Sub.object),]
+taxes <- subset(taxes, Revenue.or.Spending == 'Revenue')
+var2<- group_by(taxes, Fiscal.Year, Organization.Group) %>%
+    summarise(total = sum(Amount)/1000000)
+
+ggplot(var2, aes(x=Fiscal.Year, y=total))+
+    facet_grid(.~Organization.Group) +
+    geom_point()
+
+```
+
+```{r echo=FALSE}
+View(budget.14)
+
+```
+
+Are over spenders more likely to meet their own goals
